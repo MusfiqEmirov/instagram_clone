@@ -10,3 +10,10 @@ class Follow(models.Model):
 
     class Meta:
         unique_together = ('follower', 'following')
+        ordering = ['-created_at'] # azalan sira ile getirsin deye
+
+    def save(self, *args, **kwargs):
+        if self.follower == self.following:
+            raise ValueError("istifadeci ozunu izleye bilmez")
+        super().save(*args, **kwargs)
+
