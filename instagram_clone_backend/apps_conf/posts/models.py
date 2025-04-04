@@ -23,5 +23,5 @@ class Post(models.Model):
         self.full_clean()
         return super().save(*args, **kwargs)
 
-    def str(self):
+    def __str__(self):
         return f'{self.user.username}: {self.caption[:20]}'

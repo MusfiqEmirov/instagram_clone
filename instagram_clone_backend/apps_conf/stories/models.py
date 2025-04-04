@@ -5,29 +5,29 @@ from django.core.exceptions import ValidationError
 
 from apps_conf.users.models import CustomUser
 
-class Stories(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='stories')
-    content = models.FileField(
-        upload_to='stories/',
-        validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'mp4'])],
-    )
-    created_at = models.DateTimeField(auto_now_add=False)
-    updated_at = models.DateTimeField(auto_now_add=False)
+class Story(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    caption = models.TextField(max_length=255, null=True, blank=True)
+    image = models.ImageField(upload_to='story_images/', null=True, blank=True)
+    video = models.FileField(upload_to='story_videos/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    views = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ['-created_at']
+    
+    @classmethod
+    def visible_stories(cls):
+        return cls.objects.filter(created_at__gte=now() - timedelta(hours=24))
 
     def clean(self):
-        if not self.image and not self.video and not self.caption:
-            raise ValidationError("You must choose at least one image,caption or video")
-        
+        if not self.caption and not self.image and not self.video:
+            raise ValidationError('You must choose at least one image,caption or video')
+    
     def save(self, *args, **kwargs):
         self.full_clean()
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.username}"
-    
-    @classmethod
-    def visible_stories(cls):
-        return cls.objects.filter(created_at__gte=now() - timedelta(hours=24))
+        return f'{self.user.username}: {self.caption[:20]}'

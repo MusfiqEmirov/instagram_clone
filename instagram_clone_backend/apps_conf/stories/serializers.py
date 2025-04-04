@@ -1,16 +1,16 @@
 from rest_framework import serializers
 
-from .models import Stories, CustomUser
+from .models import Story
 from .serializers import CustomUserSerializer
 
 
-class StoriesSerializer(serializers.ModelSerializer):
+class StorySerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only=True)
     image_url = serializers.SerializerMethodField()
     video_url = serializers.SerializerMethodField()
 
     class Meta:
-        model = Stories
+        model = Story
         fields = '__all__' 
     
     def get_image_url(self, object):
