@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #apps
-    'apps.posts',
-    'apps.users',
-    'apps.reactify',
-    'apps.stroies',
-    'apps.followers',
+    'apps_conf.posts',
+    'apps_conf.users',
+    'apps_conf.reactify',
+    'apps_conf.stories',
+    'apps_conf.followers',
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'  # Əgər CustomUser modeliniz varsa
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
