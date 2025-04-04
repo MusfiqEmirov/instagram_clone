@@ -10,13 +10,14 @@ class Post(models.Model):
     video = models.FileField(upload_to='post_videos/', null=True, blank=True)
     like_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    uptaded_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-created_at'] # siralamani en yeniyegore edir
 
     def clean(self):
-        if not self.image and not self.video and not self.caption:
+        caption = self.caption.strip() if self.caption else ''
+        if not self.image and not self.video and not caption:
             raise ValidationError("You must choose at least one image,caption or video")
         
     def save(self, *args, **kwargs):
@@ -24,4 +25,4 @@ class Post(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.user.username}: {self.caption[:20]}'
+        return f'{self.user.username}: {self.caption[:20]}...'
