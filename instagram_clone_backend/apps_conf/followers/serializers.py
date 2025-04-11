@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Follow
-from users.serializers import CustomUserSerializer
+from apps_conf.users.serializers import CustomUserSerializer
 
 
 class FollowSerializer(serializers.ModelSerializer):

@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 
 
-
 class Follow(models.Model):
     follower = models.ForeignKey(
     settings.AUTH_USER_MODEL,
