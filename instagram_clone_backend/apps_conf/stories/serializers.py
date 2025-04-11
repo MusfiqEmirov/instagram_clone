@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
+
 from .models import Story
-from .serializers import CustomUserSerializer
+from apps_conf.users.serializers import CustomUserSerializer
 
 
 class StorySerializer(serializers.ModelSerializer):

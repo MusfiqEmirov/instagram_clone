@@ -9,6 +9,7 @@ from django.core.exceptions import ValidationError
 from apps_conf.users.models import CustomUser
 from apps_conf.posts.models import Post
 
+
 class PostModelTest(TestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(
