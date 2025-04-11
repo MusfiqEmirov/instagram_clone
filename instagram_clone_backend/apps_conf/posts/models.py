@@ -5,6 +5,7 @@ from apps_conf.users.models import CustomUser
 
 class Post(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    content = models.TextField(default="No content available") 
     caption = models.TextField(max_length=255, null=True, blank=True)
     image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     video = models.FileField(upload_to='post_videos/', null=True, blank=True)
